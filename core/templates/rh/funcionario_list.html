@@ -1,0 +1,86 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-8">
+    <div>
+        <h2 class="text-2xl font-black text-white uppercase italic tracking-tighter">
+            Corpo <span class="text-blue-500">Técnico</span>
+        </h2>
+        <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1">Gestão de capital humano e acessos</p>
+    </div>
+    <a href="{% url 'create_funcionario' %}" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+        Admitir Colaborador
+    </a>
+</div>
+
+<div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+    <table class="w-full text-left">
+        <thead>
+            <tr class="bg-slate-950/50 border-b border-slate-800 text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">
+                <th class="p-5">Colaborador / Sistema</th>
+                <th class="p-5">Unidade / Empresa</th>
+                <th class="p-5">Departamentos</th>
+                <th class="p-5 text-right">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/50">
+            {% for func in funcionarios %}
+            <tr class="hover:bg-slate-800/30 transition-colors group">
+                <td class="p-5">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-950 flex items-center justify-center border border-slate-800 group-hover:border-blue-500/50 transition-colors">
+                            <span class="text-blue-500 font-black text-xs">{{ func.nome|slice:":1"|upper }}</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold text-slate-200 uppercase tracking-tight">{{ func.nome }}</span>
+                            <span class="text-[9px] font-mono text-slate-500 italic">@{{ func.user.username }}</span>
+                        </div>
+                    </div>
+                </td>
+
+                <td class="p-5">
+                    <span class="text-xs text-slate-400 font-mono uppercase tracking-tighter">
+                        {{ func.empresa.nome }}
+                    </span>
+                </td>
+
+                <td class="p-5">
+                    <div class="flex flex-wrap gap-1 max-w-[250px]">
+                        {% for depto in func.departamentos.all %}
+                        <span class="text-[8px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded uppercase font-bold tracking-tighter">
+                            {{ depto.nome }}
+                        </span>
+                        {% empty %}
+                        <span class="text-[9px] text-slate-600 italic">Sem setor</span>
+                        {% endfor %}
+                    </div>
+                </td>
+
+                <td class="p-5 text-right">
+                    <div class="flex justify-end gap-3 opacity-60 group-hover:opacity-100 transition-opacity">
+                        <a href="{% url 'create_documento' %}?funcionario_id={{ func.id }}" title="Anexar Documento" class="p-2 bg-slate-950 hover:bg-emerald-600/20 border border-slate-800 hover:border-emerald-500/50 rounded-lg text-emerald-500 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+                        </a>
+
+                        <a href="{% url 'update_funcionario' func.id %}" title="Editar Cadastro" class="p-2 bg-slate-950 hover:bg-blue-600/20 border border-slate-800 hover:border-blue-500/50 rounded-lg text-blue-500 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        </a>
+
+                        <a href="{% url 'delete_funcionario' func.id %}" title="Remover" class="p-2 bg-slate-950 hover:bg-red-600/20 border border-slate-800 hover:border-red-500/50 rounded-lg text-red-500 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="p-12 text-center">
+                    <p class="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em]">Nenhum colaborador encontrado na base de dados.</p>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

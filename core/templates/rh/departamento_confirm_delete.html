@@ -1,0 +1,29 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20 bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl text-center">
+    <div class="w-16 h-16 bg-red-600/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+    </div>
+
+    <h2 class="text-xl font-black text-white uppercase mb-2 italic">Atenção Crítica</h2>
+    <p class="text-slate-400 text-sm mb-8 font-mono uppercase tracking-tighter">Confirmar remoção do setor: <span
+            class="text-blue-500 font-bold">{{ object.nome }}</span>?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex flex-col gap-3">
+            <button type="submit"
+                class="w-full bg-red-600 hover:bg-red-500 text-white font-black py-4 rounded-xl uppercase text-xs tracking-widest transition-all shadow-lg shadow-red-600/20">
+                Remover da Estrutura
+            </button>
+            <a href="{% url 'list_departamentos' %}"
+                class="text-slate-500 hover:text-white text-[10px] font-mono uppercase py-2 tracking-widest">Abortar
+                Operação</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

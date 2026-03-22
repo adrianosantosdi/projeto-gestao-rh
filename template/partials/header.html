@@ -1,0 +1,45 @@
+<header
+    class="h-16 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-8 sticky top-0 z-50 shadow-2xl">
+
+    <div class="flex items-center space-x-6">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <span class="text-white font-black tracking-tighter text-xl uppercase">CORE <span
+                    class="text-blue-500">RH</span></span>
+        </div>
+
+        <div class="hidden sm:flex items-center space-x-2 px-3 py-1 bg-slate-950 border border-slate-800 rounded-full">
+            <span class="relative flex h-2 w-2">
+                <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span class="text-[9px] font-mono text-green-500 uppercase tracking-widest font-bold">Sistema Online</span>
+        </div>
+    </div>
+
+    <div class="flex items-center space-x-6">
+        <div class="flex flex-col items-end border-r border-slate-800 pr-6">
+            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">Operador Autenticado</span>
+            <span class="text-xs font-bold text-blue-400 font-mono tracking-tight">{{ user.username|upper }}</span>
+        </div>
+
+        <form action="{% url 'logout' %}" method="post" class="m-0">
+            {% csrf_token %}
+            <button type="submit" title="Encerrar Sessão"
+                class="flex items-center space-x-2 bg-slate-800 hover:bg-red-900/30 text-slate-400 hover:text-red-500 px-4 py-2 rounded-xl border border-slate-700 transition-all group">
+                <span class="text-[10px] font-black font-mono uppercase tracking-widest hidden lg:block">Sair</span>
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+            </button>
+        </form>
+    </div>
+</header>
